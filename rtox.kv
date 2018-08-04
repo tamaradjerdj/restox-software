@@ -1,0 +1,244 @@
+<RToxMain>:
+    orientation: 'vertical'
+    spacing: 10, 0
+    padding: 10, 10, 10, 10
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: 0.1
+        BoxLayout:
+            orientation: 'horizontal'
+            MyLabel:
+                text: '[i][b]ResTox software support[/b][/i]'
+                font_size: 32
+                size_hint_x: 0.8
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.2
+                Image:
+                    source: 'defensoil_logo.png'
+                    size_hint_y: 0.8
+                MyLabel:
+                    text: '[ref=web]Click to visit our web-page[/ref]!'
+                    color: (0.9,0.6,0.1,0.75)
+                    font_size: 9
+                    size_hint_y: 0.2
+                    halign: 'center'
+                    on_ref_press:
+                        import webbrowser
+                        webbrowser.open('http://defensoil.unios.hr/')
+
+        Separator:
+            color: 0., 0., 0.
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: 0.45
+        spacing: 5
+        MyLabel:
+            text: '[b]SETUP[/b]'
+            font_size: 20
+        Separator
+        MyLabel:
+            text: 'File'
+            font_size: 18
+        MyBoxLayout:
+            MyLabel:
+                padding_x: 40
+                text: 'Path: '
+            LabelWithBackg
+                id: path_
+                text: 'path_to_file.csv'
+            Button:
+                id: browse_btn
+                text: 'Browse'
+                on_release: root.show_save()
+        MyLabel:
+            text: 'CO[sub]2[/sub] data'
+            font_size: 18
+        MyBoxLayout:
+            MyLabel:
+                padding_x: 40
+                text: 'Duration of measurement: '
+            MyTextInput:
+                id: dur_meas
+            MyLabel:
+                text: ' [min]'
+        MyBoxLayout:
+            MyLabel:
+                padding_x: 40
+                text: 'Frequency of data recording: '
+            MyTextInput:
+                id: rec_freq
+            MyLabel:
+                text: ' [s] (min. 1 s)'
+        MyLabel:
+            text: 'Pump activity'
+            font_size: 18
+        MyBoxLayout:
+            MyLabel:
+                padding_x: 40
+                text: 'Duration of pumping: '
+            MyTextInput:
+                id: dur_pump
+            MyLabel:
+                text: ' [s]'
+        MyBoxLayout:
+            MyLabel:
+                padding_x: 40
+                text: 'Frequency of pump activation: '
+            MyTextInput:
+                id: pump_freq
+            MyLabel:
+                text: ' [min]'
+        MyBoxLayout:
+            Button:
+                id: start_btn
+                text: 'Start'
+                on_press: root.start_meas()
+            Button:
+                id: clear_btn
+                text: 'Clear all fields'
+                on_press: root.clear_all()
+            Button:
+                text: 'Exit'
+                on_release: root.leave_prog()
+        Separator:
+            color: 0., 0., 0.
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 5
+        size_hint_y: 0.45
+        MyLabel:
+            size_hint_y: 0.1
+            text: '[b]MEASUREMENT[/b]'
+            font_size: 20
+        Separator
+        MyBoxLayout:
+            size_hint_y: 0.1
+            MyLabel:
+                text: 'Measurement ending in: '
+                padding_x: 10
+                font_size: 16
+            Label:
+                id: meas_rem
+                font_size: 16
+            MyLabel:
+                text: 'Pump activating in: '
+                font_size: 16
+            Label:
+                id: pump_rem
+                font_size: 16
+        MyLabel:
+            size_hint_y: 0.1
+            text: 'Current CO[sub]2[/sub]-readings'
+            padding_x: 10
+            font_size: 16
+        MyBoxLayout:
+            size_hint_y: 0.7
+            GridLayout:
+                rows: 4
+                cols: 4
+                spacing: 10
+                size_hint_x: 0.7
+                SensorLabel:
+                    text: 'Exp1'
+                SensorLabel:
+                    text: 'Exp2'
+                SensorLabel:
+                    text: 'Exp3'
+                SensorLabel:
+                    text: 'Exp4'
+                SensorValue:
+                    id: exp_1
+                SensorValue:
+                    id: exp_2
+                SensorValue:
+                    id: exp_3
+                SensorValue
+                    id: exp_4
+                SensorLabel:
+                    text: 'Exp5'
+                SensorLabel:
+                    text: 'Exp6'
+                SensorLabel:
+                    text: 'Exp7'
+                SensorLabel:
+                    text: 'Exp8'
+                SensorValue:
+                    id: exp_5
+                SensorValue:
+                    id: exp_6
+                SensorValue
+                    id: exp_7
+                SensorValue
+                    id: exp_8
+            BoxLayout:
+                size_hint_x: 0.3
+                orientation: 'vertical'
+                MyBoxLayout:
+                    MyLabel:
+                        text: 'Temperature: '
+                        font_size: 16
+                        size_hint_x: 0.7
+                    Label:
+                        id: temp
+                        font_size: 16
+                        size_hint_x: 0.15
+                    Label:
+                        text: '[°C]'
+                        font_size: 16
+                        size_hint_x: 0.15
+                MyBoxLayout:
+                    Image:
+                        id: light_img
+                        source: 'light_on.png'
+                    Image:
+                        id: pump_img
+                        source: 'pump_inactive.png'
+        Button:
+            id: graph_btn
+            size_hint_x: 0.3
+            size_hint_y: 0.1
+            text: 'Show graph'
+            on_release: root.draw()
+
+<Separator@Widget>
+    size_hint_y: None
+    thickness: 2
+    margin: 0
+    height: self.thickness + 2 * self.margin
+    color: 1., .0, .0
+    canvas:
+        Color:
+            rgb: self.color
+        Rectangle:
+            pos: self.x + self.margin, self.y + self.margin + 1
+            size: self.width - 2 * self.margin , self.thickness
+
+<MyLabel@Label>
+    padding_x: 20
+    text_size: root.width, None
+    halign: 'left'
+    valign: 'middle'
+    markup: True
+
+<MyBoxLayout@BoxLayout>
+    orientation: 'horizontal'
+
+<LabelWithBackg@Label>:
+    canvas.before:
+        Color:
+            rgb: 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    color: [0,0,0,1]
+
+<MyTextInput@TextInput>
+    multiline: False
+    write_tab: False
+
+<SensorLabel@Label>
+    font_size: 16
+
+<SensorValue@LabelWithBackg>
+    font_size: 16
